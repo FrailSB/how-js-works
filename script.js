@@ -29,11 +29,25 @@
 // foo();
 // console.log(age);
 
-/*********
- * Scoping
- */
+// /*********
+//  * Scoping
+//  */
 
-// // First scoping example
+// // // First scoping example
+// // var a = 'Hello!';
+// // first();
+
+// // function first() {
+// //   var b = 'Hi!';
+// //   second();
+
+// //   function second() {
+// //     var c = 'Hey!';
+// //     console.log(a, b, c);
+// //   }
+// // }
+
+// // Second example to show difference between execution stack and scope chain
 // var a = 'Hello!';
 // first();
 
@@ -43,26 +57,51 @@
 
 //   function second() {
 //     var c = 'Hey!';
-//     console.log(a, b, c);
+//     third();
 //   }
 // }
 
-// Second example to show difference between execution stack and scope chain
-var a = 'Hello!';
-first();
+// function third() {
+//   var d = 'John';
+//   // console.log(c);
+//   console.log(a, d);
+// }
 
-function first() {
-  var b = 'Hi!';
-  second();
+/******************
+ * The this keyword
+ */
 
-  function second() {
-    var c = 'Hey!';
-    third();
+// console.log(this);
+
+calcAge(1997);
+
+function calcAge(year) {
+  console.log(2020 - year);
+  console.log(this);
+}
+
+var frail = {
+  name: 'Frail',
+  yearOfBirth: 1997,
+  calcAge: function() {
+    console.log(this);
+    console.log(2020 - this.yearOfBirth);
+
+    /*
+    function innerFunction() {
+      console.log(this);
+    }
+    innerFunction();
+    */
   }
-}
+};
 
-function third() {
-  var d = 'John';
-  // console.log(c);
-  console.log(a, d);
-}
+frail.calcAge();
+
+var mike = {
+  name: 'Mike',
+  yearOfBirth: 1984
+};
+
+mike.calcAge = frail.calcAge;
+mike.calcAge();
